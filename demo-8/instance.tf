@@ -3,6 +3,9 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
   provisioner "local-exec" {
     command = "echo ${aws_instance.example.private_ip} >> private_ips.txt"
+  output "ip" {
+      value = aws_instance.example.public_ip
+    }
   }
 
   # the VPC subnet
@@ -13,8 +16,4 @@ resource "aws_instance" "example" {
 
   # the public SSH key
   key_name = aws_key_pair.mykeypair.key_name
-
-  output "ip" {
-    value = aws_instance.example.public_ip
-  }
 }
